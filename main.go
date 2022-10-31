@@ -9,7 +9,6 @@ import (
 )
 
 func main() {
-
 	_, err := config.Connect()
 	if err != nil {
 		log.Fatal(err)
