@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DdlMappings">
+    <mapping uuid="a049d96c-7a0f-4b31-9e76-f7fe173c11b7" name="mongodb+srv://SuperAdmin:z899PB0ogj14ZPQz@cluster0.5kqyhe1.mongodb.net/?retryWrites=true&amp;w=majority Mapping">
+      <data-sources db="a686b8c3-b21d-48fc-b0fd-416a0961cfe1" />
+      <scope>
+        <node kind="database" negative="1">
+          <node kind="schema" negative="1" />
+        </node>
+      </scope>
+    </mapping>
+  </component>
+</project>
