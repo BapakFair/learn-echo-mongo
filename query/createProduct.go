@@ -2,28 +2,29 @@ package query
 
 import (
 	"context"
-	"fmt"
 	"github.com/labstack/echo/v4"
 	"learn-echo-mongo/config"
-	"learn-echo-mongo/handlers"
+	"learn-echo-mongo/models"
 	"log"
 	"net/http"
 )
 
 var ctx = context.Background()
 
-func CreateProduct(c echo.Context) error {
+func CreateProduct(c echo.Context) (models.Response, error) {
+	var res models.Response
+
 	db, err := config.Connect()
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 
-	var reqBody handlers.Product
+	var reqBody models.Product
 	if err := c.Bind(&reqBody); err != nil {
-		return err
+		log.Fatal(err.Error())
 	}
-	fmt.Println("ini request isine: ", reqBody)
-	data, err := db.Collection("products").InsertOne(ctx, handlers.Product{
+
+	data, err := db.Collection("products").InsertOne(ctx, models.Product{
 		Name:        reqBody.Name,
 		Price:       reqBody.Price,
 		Currency:    reqBody.Currency,
@@ -36,6 +37,9 @@ func CreateProduct(c echo.Context) error {
 		log.Fatal(err.Error())
 	}
 
-	fmt.Println("Insert success!")
-	return c.JSON(http.StatusOK, data)
+	res.Status = http.StatusOK
+	res.Message = "Insert data success"
+	res.Data = data
+
+	return res, nil
 }

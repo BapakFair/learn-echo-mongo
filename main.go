@@ -1,10 +1,9 @@
 package main
 
 import (
-	"fmt"
 	"github.com/labstack/echo/v4"
 	"learn-echo-mongo/config"
-	"learn-echo-mongo/query"
+	"learn-echo-mongo/routes"
 	"log"
 	"net/http"
 )
@@ -17,12 +16,8 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("gasss...")
 
-	e := echo.New()
-	e.GET("/api/product", query.GetAllProducts)
-	e.GET("/api/product/:id", query.GetProducts)
-	e.POST("/api/products", query.CreateProduct)
+	e := routes.Init()
 
-	e.Start(":8989")
+	e.Logger.Fatal(e.Start(":8989"))
 }
