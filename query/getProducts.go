@@ -2,8 +2,6 @@ package query
 
 import (
 	"context"
-	"fmt"
-	"github.com/labstack/echo/v4"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"learn-echo-mongo/config"
@@ -13,26 +11,28 @@ import (
 	"time"
 )
 
-func GetProducts(c echo.Context) error {
-	fmt.Println("manuk")
+func GetProductById(id string) (models.Response, error) {
+	var res models.Response
+	var product models.Product
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	db, err := config.Connect()
 	if err != nil {
 		log.Fatal(err.Error())
 	}
-	productId := c.QueryString()
-	var product models.Product
-	defer cancel()
-	//fmt.Println("isi product id: ... ", productId)
-	objId, _ := primitive.ObjectIDFromHex(productId)
-	//fmt.Println("ini objid: ", objId)
 
-	if err = db.Collection("products").FindOne(ctx, bson.M{"_id": objId}).Decode(&product); err != nil {
+	defer cancel()
+
+	objId, _ := primitive.ObjectIDFromHex(id)
+
+	if err := db.Collection("products").FindOne(ctx, bson.M{"_id": objId}).Decode(&product); err != nil {
 		log.Fatal(err)
 	}
 
-	//fmt.Println(product)
-	return c.JSON(http.StatusOK, &echo.Map{"data": product})
+	res.Status = http.StatusOK
+	res.Message = "Get data success"
+	res.Data = product
+
+	return res, nil
 }
 
 func GetAllProducts() (models.Response, error) {
