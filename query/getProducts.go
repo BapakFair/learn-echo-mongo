@@ -6,7 +6,6 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"learn-echo-mongo/config"
 	"learn-echo-mongo/models"
-	"log"
 	"net/http"
 	"time"
 )
@@ -17,7 +16,7 @@ func GetProductById(id string) (models.Response, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	db, err := config.Connect()
 	if err != nil {
-		log.Fatal(err.Error())
+		return res, err
 	}
 
 	defer cancel()
@@ -25,7 +24,7 @@ func GetProductById(id string) (models.Response, error) {
 	objId, _ := primitive.ObjectIDFromHex(id)
 
 	if err := db.Collection("products").FindOne(ctx, bson.M{"_id": objId}).Decode(&product); err != nil {
-		log.Fatal(err)
+		return res, err
 	}
 
 	res.Status = http.StatusOK

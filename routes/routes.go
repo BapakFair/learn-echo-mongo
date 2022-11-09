@@ -14,7 +14,7 @@ func Init() *echo.Echo {
 		return c.String(http.StatusOK, "Hallo this is echo")
 	})
 	e.GET("/api/products", controllers.GetAllProducts)
-	e.GET("/api/product:id", controllers.GetProductById)
+	e.GET("/api/product", controllers.GetProductById)
 	e.POST("/api/products", controllers.CreateProduct)
 
 	return e
