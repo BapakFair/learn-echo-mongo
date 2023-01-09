@@ -4,7 +4,6 @@ import "go.mongodb.org/mongo-driver/bson/primitive"
 
 type Users struct {
 	ID           primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
-	NickName     string             `json:"nickName" bson:"nickName" validate:"required, max=10"`
 	FullName     string             `json:"fullName" bson:"fullName" validate:"required, max=50"`
 	NomorAnggota string             `json:"nomorAnggota" bson:"nomorAnggota" validate:"required, max=50"`
 	TotalPetak   int                `json:"totalPetak" bson:"totalPetak" validate:"required, max=2000"`
@@ -24,4 +23,5 @@ type Users struct {
 	NIK          int                `json:"nik" bson:"nik"`
 	KK           int                `json:"kk" bson:"kk"`
 	Province     string             `json:"province" bson:"province"`
+	Pokja        string             `json:"pokja" bson:"pokja"`
 }

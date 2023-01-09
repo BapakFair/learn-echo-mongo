@@ -13,9 +13,9 @@ func Init() *echo.Echo {
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hallo this is echo")
 	})
-	e.GET("/api/products", controllers.GetAllProducts)
-	e.GET("/api/product", controllers.GetProductById)
-	e.POST("/api/products", controllers.CreateProduct)
+	e.GET("/api/users", controllers.GetUsers)
+	e.GET("/api/user", controllers.GetUserById)
+	e.POST("/api/user", controllers.CreateUsers)
 
 	return e
 }

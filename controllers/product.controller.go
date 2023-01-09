@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-func CreateProduct(c echo.Context) error {
+func CreateUsers(c echo.Context) error {
 	var reqBody models.Product
 	if err := c.Bind(&reqBody); err != nil {
 		log.Fatal(err.Error())
@@ -21,16 +21,25 @@ func CreateProduct(c echo.Context) error {
 	return c.JSON(http.StatusCreated, result)
 }
 
-func GetAllProducts(c echo.Context) error {
+func GetUsers(c echo.Context) error {
+	id := c.QueryParam("id")
+	if id != "" {
+		result, err := query.GetProductById(id)
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
+		}
+		//c.Request()
+		return c.JSON(http.StatusOK, result)
+	}
 	result, err := query.GetAllProducts()
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
 	}
-	c.Request()
+	//c.Request()
 	return c.JSON(http.StatusOK, result)
 }
 
-func GetProductById(c echo.Context) error {
+func GetUserById(c echo.Context) error {
 	id := c.QueryParam("id")
 	result, err := query.GetProductById(id)
 
